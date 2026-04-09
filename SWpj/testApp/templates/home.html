@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+</head>
+
+<body style="background-color: white;">
+
+    <h1>Welcome to SoundWav</h1>
+	<div style="
+	width: 90%;
+	height: 15px;
+	background-color: #001C56;
+	margin-top:20px;
+	margin-left:50px;
+	border-radius: 10px;
+	"></div>
+  
+  
+{% if user.is_authenticated %}
+    <h2>Hello {{ user.username }}!</h2>
+
+    <form action="/accounts/logout/" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% else %}
+    <a href="/accounts/login/">
+        <button>Login</button>
+    </a>
+{% endif %}
+
+
+  
+  <h2>My Collection</h2>
+  <div id="collection"></div>
+
+<button onclick="addComponent()">Add Component</button>
+<button onclick="removeComponent()">Remove Component</button>
+``
+<!--
+{% include "components/card.html" with name="Item 1" %}
+{% include "components/card.html" with name="Item 2" %}
+{% include "components/card.html" with name="Item 3" %}
+``
+-->
+
+<a href="/about/">
+    <button>Go to About</button>
+</a>
+
+
+
+  
+
+
+<script>
+    function addComponent() {
+        const collection = document.getElementById("collection");
+
+        const item = document.createElement("div");
+        item.style.width = "100px";
+        item.style.height = "100px";
+        item.style.backgroundColor = "lightblue";
+        item.style.margin = "10px";
+        item.style.display = "inline-block";
+        item.style.textAlign = "center";
+        item.style.lineHeight = "100px";
+
+        item.innerText = "Item";
+
+        collection.appendChild(item);
+    }
+
+    function removeComponent() {
+        const collection = document.getElementById("collection");
+
+        if (collection.lastChild) {
+            collection.removeChild(collection.lastChild);
+        }
+    }
+</script>
+</body>
+
+</html>
