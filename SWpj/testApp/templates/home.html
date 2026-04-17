@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Home</title>	
+<style>
+	.collection {
+		display: flex;
+		flex-direction: row;
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+ </style>
 </head>
 
 <body style="background-color: white;">
@@ -20,29 +28,57 @@
 {% if user.is_authenticated %}
     <h2>Hello {{ user.username }}!</h2>
 
-    <form action="/accounts/logout/" method="post" style="display:inline;">
+    <form action="/accounts/logout/" method="post" style="
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		z-index: 1000;
+		">
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form>
 {% else %}
     <a href="/accounts/login/">
-        <button>Login</button>
+        <button style="
+		position: fixed;
+		top: 20px;
+		right: 20px;
+		z-index: 1000;
+		">
+		Login</button>
     </a>
+	
+	
+	<a href="/signup/">
+        <button style ="
+		position: fixed;
+		top: 20px;
+		right: 80px;
+		z-index: 1000;
+		">Sign Up</button>
+    </a>
+
 {% endif %}
 
 
   
-  <h2>My Collection</h2>
-  <div id="collection"></div>
+<h2>My Collection</h2>
 
-<button onclick="addComponent()">Add Component</button>
-<button onclick="removeComponent()">Remove Component</button>
-``
+<div id="collection" class="collection"></div>
+
+<!-- Hidden template -->
+<div id="card-template" style="display: none;">
+    {% include "components/card.html" %}
+</div>
+
+<button onclick="addComponent()">Add Card</button>
+<button onclick="removeComponent()">Remove Card</button>
+
 <!--
 {% include "components/card.html" with name="Item 1" %}
 {% include "components/card.html" with name="Item 2" %}
 {% include "components/card.html" with name="Item 3" %}
-``
+
 -->
 
 <a href="/about/">
@@ -55,30 +91,21 @@
 
 
 <script>
-    function addComponent() {
-        const collection = document.getElementById("collection");
+function addComponent() {
+    const collection = document.getElementById("collection");
+    const template = document.getElementById("card-template");
 
-        const item = document.createElement("div");
-        item.style.width = "100px";
-        item.style.height = "100px";
-        item.style.backgroundColor = "lightblue";
-        item.style.margin = "10px";
-        item.style.display = "inline-block";
-        item.style.textAlign = "center";
-        item.style.lineHeight = "100px";
+    const newCard = template.firstElementChild.cloneNode(true);
+    collection.appendChild(newCard);
+}
 
-        item.innerText = "Item";
+function removeComponent() {
+    const collection = document.getElementById("collection");
 
-        collection.appendChild(item);
+    if (collection.lastElementChild) {
+        collection.removeChild(collection.lastElementChild);
     }
-
-    function removeComponent() {
-        const collection = document.getElementById("collection");
-
-        if (collection.lastChild) {
-            collection.removeChild(collection.lastChild);
-        }
-    }
+}
 </script>
 </body>
 

@@ -1,10 +1,52 @@
-<div style="
+this is what my card.html has right now:<div class="card-wrapper">
+    <img
+        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZGlwb2sxdHI5Z2d5NGljdXh1aDUzZXd6cjFhcjNpczlrb3ppZGxjMiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/u3T7c4G8SbkpcRrqJp/giphy.gif"
+        alt="Vinyl"
+        class="card-image"
+    >
+
+    <div class="card">
+        <h3>My Card</h3>
+        <p>This is the card content.</p>
+    </div>
+</div>
+
+<style>
+.card-wrapper {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 40px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    z-index: 2;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.card-image {
+    position: absolute;
+    top: 50%;
+    right: -55px;
+    transform: translateY(-50%);
+
     width: 120px;
     height: 120px;
-    background-color: orange;
-    margin: 10px;
-    display: inline-block;
-    text-align: center;
-">
-    {{ title }}
-</div>
+    object-fit: cover;
+
+    border-radius: 50%;
+    z-index: 1;
+}
+</style>
