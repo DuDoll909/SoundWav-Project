@@ -9,39 +9,101 @@
 		gap: 20px;
 		flex-wrap: wrap;
 	}
+	
+	body{
+	margin: 0;
+	}
+	
+	header {
+		background-color: #f2f2f2;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+
+		
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+
+	}
+<!--
+	.header-line {
+		width: 90%;
+		height: 15px;
+		background-color: #001C56;
+		margin-left: 50px;
+		border-radius: 10px;
+	}
+-->
+	.testing{
+	width:20px;
+	height:1000px;
+	background-color:orange;
+	}
+	
+	.header-inner{
+		display:flex;
+		align-items:center;
+		justify-content:space-between;
+	}
+	
+	.search-bar {
+		position:fixed;
+		right: 150px;
+	}
  </style>
+ 
 </head>
 
-<body style="background-color: white;">
+<body>
 
+<header>
+	
+	<div class="header-inner">
+	
     <h1>Welcome to SoundWav</h1>
-	<div style="
-	width: 90%;
-	height: 15px;
-	background-color: #001C56;
-	margin-top:20px;
-	margin-left:50px;
-	border-radius: 10px;
-	"></div>
+	
+	
+	<input
+		type="text"
+		id="searchInput"
+		placeholder="Search your music..."
+		class="search-bar"
+	/>
+
+	</div>
+	<!--
+    <div class="header-line"></div>
+	-->
+</header>
   
-  
+
 {% if user.is_authenticated %}
     <h2>Hello {{ user.username }}!</h2>
 
     <form action="/accounts/logout/" method="post" style="
 		position: fixed;
-		top: 20px;
+		top: 29px;
 		right: 20px;
 		z-index: 1000;
 		">
         {% csrf_token %}
         <button type="submit">Logout</button>
     </form>
+	
+	<a href="/profile/">
+    <button style="
+		position: fixed;
+		top: 29px;
+		right: 80px;
+		z-index: 1000;
+		">Go to profile</button>
+	</a>
+
 {% else %}
     <a href="/accounts/login/">
         <button style="
 		position: fixed;
-		top: 20px;
+		top: 29px;
 		right: 20px;
 		z-index: 1000;
 		">
@@ -52,7 +114,7 @@
 	<a href="/signup/">
         <button style ="
 		position: fixed;
-		top: 20px;
+		top: 29px;
 		right: 80px;
 		z-index: 1000;
 		">Sign Up</button>
@@ -61,25 +123,6 @@
 {% endif %}
 
 
-  
-<h2>My Collection</h2>
-
-<div id="collection" class="collection"></div>
-
-<!-- Hidden template -->
-<div id="card-template" style="display: none;">
-    {% include "components/card.html" %}
-</div>
-
-<button onclick="addComponent()">Add Card</button>
-<button onclick="removeComponent()">Remove Card</button>
-
-<!--
-{% include "components/card.html" with name="Item 1" %}
-{% include "components/card.html" with name="Item 2" %}
-{% include "components/card.html" with name="Item 3" %}
-
--->
 
 <a href="/about/">
     <button>Go to About</button>
@@ -90,23 +133,7 @@
   
 
 
-<script>
-function addComponent() {
-    const collection = document.getElementById("collection");
-    const template = document.getElementById("card-template");
 
-    const newCard = template.firstElementChild.cloneNode(true);
-    collection.appendChild(newCard);
-}
-
-function removeComponent() {
-    const collection = document.getElementById("collection");
-
-    if (collection.lastElementChild) {
-        collection.removeChild(collection.lastElementChild);
-    }
-}
-</script>
 </body>
-
+  <div class="testing"><div>
 </html>

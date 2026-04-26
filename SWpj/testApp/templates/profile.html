@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<h2>My Collection</h2>
+
+<div id="collection" class="collection"></div>
+
+<!-- Hidden template -->
+<div id="card-template" style="display: none;">
+    {% include "components/card.html" %}
+</div>
+
+<!--
+<button onclick="addComponent()">Add Card</button>
+<button onclick="removeComponent()">Remove Card</button>
+-->
+<script>
+function addComponent() {
+    const collection = document.getElementById("collection");
+    const template = document.getElementById("card-template");
+
+    const newCard = template.firstElementChild.cloneNode(true);
+    collection.appendChild(newCard);
+	
+	
+	// make the card clickable
+    newCard.addEventListener("click", () => {
+        console.log("Card clicked");
+        // later: open playlist, navigate, etc.
+    });
+
+	
+}
+
+function removeComponent() {
+    const collection = document.getElementById("collection");
+
+    if (collection.lastElementChild) {
+        collection.removeChild(collection.lastElementChild);
+    }
+}
+</script>
+
+
+</html>
