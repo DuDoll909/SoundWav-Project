@@ -1,15 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-</head>
-<body>
-    <h2>Login</h2>
+{% extends "testApp/base.html" %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log in</button>
-    </form>
-</body>
-</html>
+{% block title %}Login{% endblock %}
+
+{%block auth_buttons %}
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Login</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">Login</button>
+</form>
+
+<p>Don’t have an account?</p>
+
+<a href="/signup/">
+	<button>Sign Up</button>
+	</a>
+
+
+{% endblock %}

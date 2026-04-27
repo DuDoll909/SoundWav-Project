@@ -4,19 +4,19 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 
 def home(request):
-    return render(request,"home.html")
+    return render(request,"testApp/home.html")
     
 def about(request):
-    return render(request,"about.html")
+    return render(request,"testApp/about.html")
     
 def profile(request):
-    return render(request,"profile.html")
+    return render(request,"testApp/profile.html")
     
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()              # creates the user
+            form.save()             
             return redirect('/accounts/login/')
     else:
         form = UserCreationForm()

@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html>
+{% extends "testApp/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
 
 <h2>My Collection</h2>
 
@@ -10,10 +13,26 @@
     {% include "components/card.html" %}
 </div>
 
-<!--
 <button onclick="addComponent()">Add Card</button>
 <button onclick="removeComponent()">Remove Card</button>
--->
+
+{% if user.is_authenticated %}
+    <h2>{{ user.username }}'s Playlists</h2>
+{% else %}
+    <h2>Looks like you need a profile, sign up!</h2>
+
+    <a href="/signup/">
+        <button style="
+            position: fixed;
+            top: 29px;
+            right: 80px;
+            z-index: 1000;
+        ">
+            Sign Up
+        </button>
+    </a>
+{% endif %}
+
 <script>
 function addComponent() {
     const collection = document.getElementById("collection");
@@ -21,15 +40,10 @@ function addComponent() {
 
     const newCard = template.firstElementChild.cloneNode(true);
     collection.appendChild(newCard);
-	
-	
-	// make the card clickable
+
     newCard.addEventListener("click", () => {
         console.log("Card clicked");
-        // later: open playlist, navigate, etc.
     });
-
-	
 }
 
 function removeComponent() {
@@ -41,5 +55,4 @@ function removeComponent() {
 }
 </script>
 
-
-</html>
+{% endblock %}

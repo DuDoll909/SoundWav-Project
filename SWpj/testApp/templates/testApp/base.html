@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	<title>{% block title %}SoundWav{% endblock %}</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+		<style>
+
+			.collection {
+					display: flex;
+					flex-direction: row;
+					gap: 20px;
+					flex-wrap: wrap;
+				}
+				
+				body{
+				margin: 0;
+				background-color:#7AAACE;
+				font-family: 'Poppins',sans-serif;
+				}
+				
+				header {
+					background-color: #355872;
+					position: sticky;
+					top: 0;
+					z-index: 100;
+
+					
+					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+				}
+				.header-inner{
+					display:flex;
+					align-items:center;
+					justify-content:space-between;		
+					height:80px;
+					box-sizing:border-box;
+					padding-left:20px;
+					padding-right:20px;
+				}
+				.SoundWav{
+					color:#F7F8F0;
+				}
+				
+				.button-bar{
+					display: flex;
+					gap: 12px;
+				}
+
+		</style>
+	{% block extra_css %}{% endblock %}
+	</head>
+	<body>
+		<header>
+			
+			<div class="header-inner">
+			
+				<h1 class = "SoundWav">SoundWav</h1>
+				{% block auth_buttons %}
+				<div class ="button-bar">
+
+					{% if user.is_authenticated %}
+					
+						<form action="/accounts/logout/" method="post">
+							{% csrf_token %}
+							<button type="submit">Logout</button>
+						</form>
+						
+						<a href="/profile/">
+							<button>Go to profile</button>
+						</a>
+
+					{% else %}
+					
+						<a href="/accounts/login/">
+							<button>Login</button>
+						</a>
+						
+						
+						<a href="/signup/">
+						
+							<button>Sign Up</button>
+						</a>
+
+					{% endif %}
+
+					</div>
+				{% endblock %}
+
+			</div>
+
+		</header>
+		{% block content %}{% endblock %}
+	</body>
+
+</html>

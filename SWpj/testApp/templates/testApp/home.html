@@ -1,0 +1,79 @@
+{% extends "testApp/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_css %}
+	<style>
+
+		.testing{
+			width:20px;
+			height:1000px;
+			background-color: orange;
+		}
+		
+		.search-section{
+			display: flex;
+			justify-content: center;
+			margin-top: 30px;
+		}
+		
+		.search-bar{
+			width: 320px;
+			padding: 12px 16px;
+			border-radius: 20px;
+			border:none;
+			font-family:inherit;
+		}
+		
+		.playlist-bar{
+			display: flex;
+			flex-direction: column;
+			padding-left: 70px;
+			padding-top: 50px;
+		}
+		
+		.popular{
+			margin-bottom: 50px;
+		}
+		
+		.welcome-text{
+			margin-left: 20px;
+		}
+		
+		.extra-offset{
+			margin-left: 50px;
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="welcome-text">Welcome to SoundWav!</h2>
+
+{% if user.is_authenticated %}
+	<h2 class="welcome-text extra-offset">
+		Hello {{user.username}}!
+	</h2>
+{% endif %}
+
+<div class="search-section">
+	<input
+		type="text"
+		id="searchInput"
+		placeholder="Search your music..."
+		class="search-bar"
+		/>
+</div>
+
+<div class="playlist-bar">
+	<h2 class="popular">Popular Playlists:</h2>
+	<h2>New Playlists:</h2>
+</div>
+
+<a href="/about/">
+	<button>Go To About</button>
+</a>
+
+<div class="testing"></div>
+
+{% endblock %}
