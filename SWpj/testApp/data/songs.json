@@ -1,0 +1,46 @@
+{
+    "songs": [
+        {
+            "id": 1,
+            "name": "Souk Eye",
+            "artist": "The Gorillaz",
+            "album": "The Now Now"
+        },
+        {
+            "id": 2,
+            "name": "Ride on Time",
+            "artist": "Tatsuro Yamashita",
+            "album": "Ride on Time"
+        },
+        {
+            "id": 3,
+            "name": "Sail on Fire",
+            "artist": "Masayoshi Takanaka",
+            "album": "Can I Sing?"
+        },
+        {
+            "id": 4,
+            "name": "Darling, I (feat. Teezo Touchdown)",
+            "artist": "Tyler, The Creator",
+            "album": "CHROMAKOPIA"
+        },
+        {
+            "id": 5,
+            "name": "Is It a Crime",
+            "artist": "Sade",
+            "album": "Promise"
+        },
+        {
+            "id": 6,
+            "name": "It's Been So Long",
+            "artist": "The Living Tombstone",
+            "album": ""
+        },
+        {
+            "id": 7,
+            "name": "Poxa",
+            "artist": "Cortex",
+            "album": "Cortex, Vol. 2"
+        }
+    ]
+}

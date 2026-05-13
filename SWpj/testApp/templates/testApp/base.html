@@ -68,9 +68,18 @@
 							<button type="submit">Logout</button>
 						</form>
 						
+						{% if request.path != "/profile/" %}
 						<a href="/profile/">
 							<button>Go to profile</button>
 						</a>
+						
+						{% else %}
+						
+						<a href= "/">
+							<button>Go to home</button>
+						</a>
+						
+						{% endif %}
 
 					{% else %}
 					

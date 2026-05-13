@@ -1,0 +1,35 @@
+{% extends "testApp/base.html" %}
+
+{% block title %} Add Song {% endblock %}
+
+{% block content%}
+	<h2> Add a New Song </h2>
+	
+	<form method = "POST">
+		{% csrf_token %}
+		
+		<div>
+			<label for = "name">Song Name:</label><br>
+			<input type = "text" id = "name" name = "name" required>
+		</div>
+		
+		<br>
+		
+		<div>
+			<label for = "artist"> Artist:</label><br>
+			<input type = "text" id = "artist" name = "artist" required>
+		</div>
+		
+		<br>
+		
+		<div>
+			<label for = "album">Album:</label><br>
+			<input type = "text" id = "album" name = "album">
+		</div>
+		
+		<br>
+		
+		<button type = "submit">Add Song</button>
+	</form>
+	
+{% endblock %}

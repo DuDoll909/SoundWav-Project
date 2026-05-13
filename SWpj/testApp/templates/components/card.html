@@ -6,8 +6,8 @@
     >
 
     <div class="card">
-        <h3>My Card</h3>
-        <p>This is the card content.</p>
+        <h3>PlyLst Name</h3>
+        <p>Name of songs, artists, etc...</p>
     </div>
 </div>
 
@@ -20,6 +20,7 @@
 }
 
 .card {
+	overflow: hidden;
     position: relative;
     width: 100%;
     height: 100%;
@@ -36,6 +37,28 @@
     box-shadow: 0 12px 30px rgba(0,0,0,0.2);
 }
 
+.card h3 {
+    margin: 0;
+    font-size: 14px;
+    text-align: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card p {
+    margin-top: 6px;
+    font-size: 12px;
+    text-align: center;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    word-break: break-word;
+}
 .card-image {
     position: absolute;
     top: 50%;

@@ -4,7 +4,8 @@
 
 {% block content %}
 
-<h2>My Collection</h2>
+{% if user.is_authenticated %}
+    <h2>{{ user.username }}'s Playlists</h2>
 
 <div id="collection" class="collection"></div>
 
@@ -16,21 +17,14 @@
 <button onclick="addComponent()">Add Card</button>
 <button onclick="removeComponent()">Remove Card</button>
 
-{% if user.is_authenticated %}
-    <h2>{{ user.username }}'s Playlists</h2>
-{% else %}
-    <h2>Looks like you need a profile, sign up!</h2>
-
-    <a href="/signup/">
-        <button style="
-            position: fixed;
-            top: 29px;
-            right: 80px;
-            z-index: 1000;
-        ">
-            Sign Up
-        </button>
+	
+	
+	<a href="/add-song/">
+        <button>Add a Song</button>
     </a>
+
+{% else %}
+    <h2>Looks like you need a profile, please login or sign up!</h2>
 {% endif %}
 
 <script>
