@@ -13,4 +13,6 @@ urlpatterns = [
     
     #Form Pages
     path("add-song/", views.add_song,name = "add_song"),
+
+    #intitial
 ]
