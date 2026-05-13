@@ -72,3 +72,8 @@ def add_song(request):
         return redirect("add_song")
         
     return render(request, "testApp/add_song.html")
+
+
+def pedit(request):
+	return render(request, "testApp/playlist_editor.html")
+
