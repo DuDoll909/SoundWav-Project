@@ -6,19 +6,24 @@
 
 {% if user.is_authenticated %}
     <h2>{{ user.username }}'s Playlists</h2>
+<div id="collection" class="collection">
 
-<div id="collection" class="collection"></div>
+    {% for playlist in playlists %}
 
-<!-- Hidden template -->
-<div id="card-template" style="display: none;">
-    {% include "components/card.html" %}
+        {% include "components/card.html" %}
+
+    {% empty %}
+
+        <p>No playlists found.</p>
+
+    {% endfor %}
+
 </div>
 
-<button onclick="addComponent()">Add Card</button>
-<button onclick="removeComponent()">Remove Card</button>
-
-	
-	
+<a href="/playlist_editor/">
+        <button>New Playlist</button>
+    </a>
+    
 	<a href="/add-song/">
         <button>Add a Song</button>
     </a>

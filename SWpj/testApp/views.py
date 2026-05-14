@@ -20,7 +20,44 @@ def about(request):
     return render(request,"testApp/about.html")
     
 def profile(request):
-    return render(request,"testApp/profile.html")
+    playlists = []
+
+    if request.user.is_authenticated:
+
+          base_dir = os.path.dirname(
+            os.path.abspath(__file__)
+          )
+
+          json_path = os.path.join(
+            base_dir,
+            "data",
+            "playlists.json"
+        )
+
+    try:
+            with open(json_path, "r") as f:
+                data = json.load(f)
+
+    except (
+            FileNotFoundError,
+            json.JSONDecodeError
+        ):
+            data = {"playlists": []}
+
+    all_playlists = data.get(
+            "playlists",
+            []
+        )
+
+    # Only playlists from current user
+    playlists = [
+            playlist
+            for playlist in all_playlists
+            if int(playlist["user_id"]) == request.user.id
+        ]
+    return render(request,"testApp/profile.html", {"playlists": playlists})
+
+
     
 def signup(request):
     if request.method == "POST":
@@ -108,4 +145,46 @@ def pedit(request):
        return redirect("profile")
     return render(request, "testApp/playlist_editor.html")
 
+def playlist_page(request, playlist_id):
+
+    base_dir = os.path.dirname(
+        os.path.abspath(__file__)
+    )
+
+    json_path = os.path.join(
+        base_dir,
+        "data",
+        "playlists.json"
+    )
+
+    try:
+        with open(json_path, "r") as f:
+            data = json.load(f)
+
+    except (
+        FileNotFoundError,
+        json.JSONDecodeError
+    ):
+        data = {"playlists": []}
+
+    playlists = data.get(
+        "playlists",
+        []
+    )
+
+    playlist = None
+
+    for p in playlists:
+
+        if p["id"] == playlist_id:
+            playlist = p
+            break
+
+    return render(
+        request,
+        "testApp/playlist_page.html",
+        {
+            "playlist": playlist
+        }
+    )
 

@@ -5,12 +5,19 @@
         class="card-image"
     >
 
-    <div class="card">
-        <h3>PlyLst Name</h3>
-        <p>Name of songs, artists, etc...</p>
+    <div
+        class="card"
+        onclick='window.location.href="/playlist_page/{{ playlist.id }}/"'
+    >
+        <h3>
+            {{ playlist.playlist_name }}
+        </h3>
+        <p>
+            Playlist ID: {{ playlist.id }}
+        </p>
     </div>
-</div>
 
+</div>
 <style>
 .card-wrapper {
     position: relative;

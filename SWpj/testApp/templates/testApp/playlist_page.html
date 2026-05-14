@@ -1,0 +1,27 @@
+{% block content %}
+
+{% if playlist %}
+
+    <h1>
+        {{ playlist.playlist_name }}
+    </h1>
+
+    <p>
+        Playlist ID:
+        {{ playlist.id }}
+    </p>
+
+    <p>
+        User ID:
+        {{ playlist.user_id }}
+    </p>
+
+{% else %}
+
+    <h2>
+        Playlist not found.
+    </h2>
+
+{% endif %}
+
+{% endblock %}
