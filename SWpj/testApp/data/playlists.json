@@ -1,0 +1,14 @@
+{
+    "playlists": [
+        {
+            "id": 1,
+            "playlist_name": "Turtle",
+            "user_id": 4
+        },
+        {
+            "id": 2,
+            "playlist_name": "Math",
+            "user_id": 4
+        }
+    ]
+}
