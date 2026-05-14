@@ -75,5 +75,37 @@ def add_song(request):
 
 
 def pedit(request):
-	return render(request, "testApp/playlist_editor.html")
+    if request.method == "POST":
+       playlist_name = request.POST["playlist_name"]
+       user_id = request.user.id
+
+       base_dir = os.path.dirname(os.path.abspath(__file__))
+       json_path = os.path.join(base_dir, "data", "playlists.json")
+
+       # Read existing data
+       with open(json_path, "r") as f:
+          data = json.load(f)
+
+       playlists = data.get("playlists", [])
+
+       # Generate new ID
+       new_id = playlists[-1]["id"] + 1 if playlists else 1
+
+       # Create new playlist object
+       new_playlist = {
+        "id": new_id,
+        "playlist_name": playlist_name,
+        "user_id": user_id
+    }
+
+      # Append and save
+       playlists.append(new_playlist)
+       data["playlists"] = playlists
+
+       with open(json_path, "w") as f:
+          json.dump(data, f, indent=4)
+
+       return redirect("profile")
+    return render(request, "testApp/playlist_editor.html")
+
 

@@ -1,15 +1,31 @@
-<!DOCTYPE html>
-<html>
+{% extends "testApp/base.html" %}
 
-<head>
-    <title>Playlist Editer</title>
-</head>
+{% block title %}Profile{% endblock %}
 
-<body>
-<h1>This is where you customize your unique playlists!</h1>
+{% block content %}
 
 
-</body>
+    <p> Uploaded by {{ user.username }} </p>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div>
+        <label for="playlist_name">Playlist Name:</label><br>
+        <input
+            type="text"
+            id="playlist_name"
+            name="playlist_name"
+            required
+        >
+    </div>
+
+    <br>
 
 
-</html>
+    <button type="submit">
+        Save Playlist
+    </button>
+</form>
+
+{% endblock %}

@@ -5,7 +5,7 @@ urlpatterns = [
     path('', views.home),
     path('about/', views.about),
     path('signup/', views.signup),
-    path('profile/',views.profile),
+    path('profile/',views.profile, name = "profile"),
     
     #APIs
     path("api/playlists/", views.playlists_api),
