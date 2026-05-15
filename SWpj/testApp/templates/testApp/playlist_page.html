@@ -1,27 +1,281 @@
+{% extends "testApp/base.html" %}
+
 {% block content %}
 
-{% if playlist %}
+<style>
+    .playlist-page {
+        background-color: #7AAACE;
+        min-height: 100vh;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
 
-    <h1>
+    .top-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .playlist-info {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .cover-box {
+        width: 180px;
+        height: 180px;
+        background-color: #355872;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 28px;
+        border: 2px solid black;
+        cursor: pointer;
+    }
+
+    .playlist-details {
+        font-size: 20px;
+        line-height: 1.8;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 15px;
+    }
+
+    .save-btn,
+    .exit-btn {
+        padding: 10px 25px;
+        font-size: 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .save-btn {
+        background-color: green;
+    }
+
+    .exit-btn {
+        background-color: darkred;
+    }
+
+    .playlist-title {
+        background-color: #355872;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+
+    .song-list {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .song-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 24px;
+    }
+
+    .song-icon {
+        width: 60px;
+        height: 60px;
+        background-color: #1e88e5;
+        border-radius: 50%;
+    }
+
+    .remove-link {
+        color: red;
+        font-size: 18px;
+        text-decoration: none;
+    }
+
+    .action-item {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .action-icon {
+        font-size: 45px;
+    }
+</style>
+
+<div class="playlist-page">
+
+    {% if playlist %}
+
+    <div class="top-section">
+
+        <div class="playlist-info">
+
+            <div class="cover-box">
+                Playlist Cover Picture
+            </div>
+
+            <div class="playlist-details">
+                <div>Uploaded By You</div>
+                <div>Number of Songs: {{ playlist.songs.count }}</div>
+                <div>Listen Time: --:--</div>
+                <div>Download Size: -- MB</div>
+            </div>
+
+        </div>
+
+        <div class="button-group">
+            <button class="save-btn">Save</button>
+            <button class="exit-btn">Exit</button>
+        </div>
+
+    </div>
+
+    <div class="playlist-title">
         {{ playlist.playlist_name }}
-    </h1>
+    </div>
 
-    <p>
-        Playlist ID:
-        {{ playlist.id }}
-    </p>
+    <div class="song-list">
 
-    <p>
-        User ID:
-        {{ playlist.user_id }}
-    </p>
+        {% for song in playlist.songs.all %}
 
-{% else %}
+        <div class="song-item">
 
-    <h2>
-        Playlist not found.
-    </h2>
+            <div class="song-icon"></div>
 
-{% endif %}
+            <div>
+                {{ song.song_name }} - {{ song.artist }} - {{ song.length }}
+                <br>
+
+                <a href="#" class="remove-link">Remove</a>
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>No songs in this playlist.</p>
+
+        {% endfor %}
+
+        <div class="action-item">
+            <span class="action-icon">⊕</span>
+            <span>Add Song</span>
+        </div>
+
+        <div class="action-item">
+            <span class="action-icon">📁</span>
+            <span>Import Song</span>
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <h2>Playlist not found.</h2>
+
+    {% endif %}
+
+</div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const songList = document.getElementById("songList");
+    const addSongBtn = document.getElementById("addSongBtn");
+    const songSelect = document.getElementById("songSelect");
+    const saveBtn = document.querySelector(".save-btn");
+
+    const saveUrl = "{% url 'save_playlist' playlist.id %}";
+
+    if (!addSongBtn || !songSelect || !songList || !saveBtn) {
+        console.error("Missing elements");
+        return;
+    }
+
+ 
+    addSongBtn.addEventListener("click", () => {
+
+        const option = songSelect.options[songSelect.selectedIndex];
+
+        const songId = option.value;
+        const songName = option.dataset.name;
+        const artist = option.dataset.artist;
+        const length = option.dataset.length;
+
+        if (document.querySelector(`[data-id='${songId}']`)) {
+            alert("Song already in playlist");
+            return;
+        }
+
+        const div = document.createElement("div");
+        div.classList.add("song-item");
+        div.setAttribute("data-id", songId);
+
+        div.innerHTML = `
+            <div class="song-icon">💿</div>
+            <div>
+                ${songName} - ${artist} - ${length}
+                <br>
+                <a href="#" class="remove-link">Remove</a>
+            </div>
+        `;
+
+        songList.appendChild(div);
+    });
+
+  
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("remove-link")) {
+            e.preventDefault();
+            e.target.closest(".song-item").remove();
+        }
+    });
+
+
+    saveBtn.addEventListener("click", () => {
+
+        const songIds = [];
+
+        document.querySelectorAll(".song-item").forEach(item => {
+            songIds.push(parseInt(item.dataset.id));
+        });
+
+        console.log("Saving:", songIds);
+
+        fetch(saveUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                songs: songIds
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === "success") {
+                alert("Playlist saved!");
+            } else {
+                console.error(data);
+            }
+        });
+
+    });
+
+});
+
+</script>
+
 
 {% endblock %}

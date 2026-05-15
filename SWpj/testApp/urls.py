@@ -16,5 +16,6 @@ urlpatterns = [
 
     path('playlist_editor/',views.pedit), #short for playlist edit
     path('playlist_page/<int:playlist_id>/',views.playlist_page, name="playlist_page"), #allows for unique pages for each playlist
+    path('playlist/<int:playlist_id>/save/', views.save_playlist, name='save_playlist'),
 
 ]

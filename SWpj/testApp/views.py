@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json
 import os
@@ -187,4 +188,96 @@ def playlist_page(request, playlist_id):
             "playlist": playlist
         }
     )
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "testApp", "data")
+
+SONGS_FILE = os.path.join(DATA_DIR, "songs.json")
+PLAYLISTS_FILE = os.path.join(DATA_DIR, "playlists.json")
+
+
+def load_songs():
+    with open(SONGS_FILE, 'r') as f:
+        return json.load(f)
+
+
+def load_playlists():
+    with open(PLAYLISTS_FILE, 'r') as f:
+        return json.load(f)
+
+
+def save_playlists(playlists):
+    with open(PLAYLISTS_FILE, 'w') as f:
+        json.dump(playlists, f, indent=4)
+
+
+def playlist_page(request, playlist_id):
+
+    songs = load_songs()["songs"]
+    playlists = load_playlists()["playlists"]
+
+    playlist = next(
+        (p for p in playlists if p["id"] == playlist_id),
+        None
+    )
+
+    playlist_songs = []
+
+    if playlist:
+
+        for song_id in playlist["songs"]:
+
+            song = next(
+                (s for s in songs if s["id"] == song_id),
+                None
+            )
+
+            if song:
+                playlist_songs.append(song)
+
+    context = {
+        "playlist": playlist,
+        "playlist_songs": playlist_songs,
+        "all_songs": songs
+    }
+
+    return render(request, "testApp/playlist_page.html", context)
+
+@csrf_exempt
+def save_playlist(request, playlist_id):
+
+    if request.method == "POST":
+
+        data = json.loads(request.body)
+        updated_song_ids = data.get("songs", [])
+
+        # load file
+        with open(PLAYLISTS_FILE, "r") as f:
+            file_data = json.load(f)
+
+        playlists = file_data["playlists"]
+
+        playlist_id = int(playlist_id)
+
+        found = False
+
+        for playlist in playlists:
+            if playlist["id"] == playlist_id:
+                playlist["songs"] = updated_song_ids
+                found = True
+
+        if not found:
+            return JsonResponse({
+                "status": "error",
+                "message": "Playlist not found"
+            })
+
+        # save back full structure
+        with open(PLAYLISTS_FILE, "w") as f:
+            json.dump(file_data, f, indent=4)
+
+        
+        return JsonResponse({
+            "status": "success"
+        })
+
 
