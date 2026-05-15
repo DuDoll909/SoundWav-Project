@@ -24,3 +24,12 @@ Finishing prototype using wireframe to scope how the user will navigate through 
 Adding feature to login/logout of website(Terrell)
 Adding feature to sign-in and create account(Corbin)
 Adjusting components to show proper image and detail to better illustrate playlists(Terrell)
+
+4th sprint(~2 weeks):
+improving profile behavior, with webpage asking user to sign in if in profile webpage but not logged in (Corbin)
+Added Playlist database(Terrell)
+
+5th sprint(~ 2 weeks):
+Added song database along with the function to add songs, added song list to home webpage(Corbin)
+Added function to add playlists and to see them in your profile using a unique ID(Terrell)
+
