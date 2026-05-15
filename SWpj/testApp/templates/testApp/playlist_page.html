@@ -88,10 +88,14 @@
     }
 
     .song-icon {
-        width: 60px;
-        height: 60px;
-        background-color: #1e88e5;
-        border-radius: 50%;
+    	width: 60px;
+    	height: 60px;
+    	border-radius: 50%;
+    	background-color: #1e88e5;
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	font-size: 28px;
     }
 
     .remove-link {
@@ -127,7 +131,7 @@
 
             <div class="playlist-details">
                 <div>Uploaded By You</div>
-                <div>Number of Songs: {{ playlist.songs.count }}</div>
+                <div>Number of Songs: {{ playlist.songs|length }}</div>
                 <div>Listen Time: --:--</div>
                 <div>Download Size: -- MB</div>
             </div>
@@ -136,49 +140,66 @@
 
         <div class="button-group">
             <button class="save-btn">Save</button>
+	<a href = "/profile/">
             <button class="exit-btn">Exit</button>
+	</a>
         </div>
 
     </div>
 
-    <div class="playlist-title">
-        {{ playlist.playlist_name }}
-    </div>
+ <div class="playlist-title">
+    {{ playlist.playlist_name }}
+</div>
 
-    <div class="song-list">
+<div class="song-list" id="songList">
 
-        {% for song in playlist.songs.all %}
+    {% for song in playlist_songs %}
 
-        <div class="song-item">
+    <div class="song-item" data-id="{{ song.id }}">
 
-            <div class="song-icon"></div>
+      <div class="song-icon">💿</div>
+        <div>
+            {{ song.name }} - {{ song.artist }} - {{ song.length }}
+            <br>
 
-            <div>
-                {{ song.song_name }} - {{ song.artist }} - {{ song.length }}
-                <br>
-
-                <a href="#" class="remove-link">Remove</a>
-            </div>
-
+            <a href="#" class="remove-link">Remove</a>
         </div>
 
-        {% empty %}
+    </div>
 
-        <p>No songs in this playlist.</p>
+    {% empty %}
+
+    <p>No songs in this playlist.</p>
+
+    {% endfor %}
+
+</div>
+
+<div class="action-item">
+
+    <select id="songSelect">
+
+        {% for song in all_songs %}
+
+        <option 
+            value="{{ song.id }}"
+            data-name="{{ song.name }}"
+            data-artist="{{ song.artist }}"
+            data-length="{{ song.length }}"
+        >
+            {{ song.name }}
+        </option>
 
         {% endfor %}
 
-        <div class="action-item">
-            <span class="action-icon">⊕</span>
-            <span>Add Song</span>
-        </div>
+    </select>
 
-        <div class="action-item">
-            <span class="action-icon">📁</span>
-            <span>Import Song</span>
-        </div>
+    <button id="addSongBtn">Add Song</button>
 
-    </div>
+</div><div class="action-item">
+    <span class="action-icon">📁</span>
+    <span>Import Song</span>
+</div>
 
     {% else %}
 
@@ -276,6 +297,4 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
-
-
 {% endblock %}
