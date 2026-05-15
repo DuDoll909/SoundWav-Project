@@ -33,3 +33,5 @@ Added Playlist database(Terrell)
 Added song database along with the function to add songs, added song list to home webpage(Corbin)
 Added function to add playlists and to see them in your profile using a unique ID(Terrell)
 
+For context: DuDoll(Corbin) and Tea-txt(Terrell)
+
