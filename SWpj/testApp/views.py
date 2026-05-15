@@ -133,7 +133,8 @@ def pedit(request):
        new_playlist = {
         "id": new_id,
         "playlist_name": playlist_name,
-        "user_id": user_id
+        "user_id": user_id,
+        "songs":[],
     }
 
       # Append and save
